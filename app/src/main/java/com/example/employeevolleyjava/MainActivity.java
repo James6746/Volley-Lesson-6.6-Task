@@ -9,6 +9,8 @@ import com.example.employeevolleyjava.model.Employee;
 import com.example.employeevolleyjava.volley.VolleyHandler;
 import com.example.employeevolleyjava.volley.VolleyHttp;
 
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        workWithVolley();
+        VolleyHttp.get2(VolleyHttp.API_LIST_POST, VolleyHttp.paramsEmpty());
+//        workWithVolley();
     }
 
     private void workWithVolley() {

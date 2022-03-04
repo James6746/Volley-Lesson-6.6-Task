@@ -8,10 +8,13 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.employeevolleyjava.MyApplication;
 import com.example.employeevolleyjava.model.Employee;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -180,5 +183,46 @@ public class VolleyHttp {
         params.put("salary", employee.getEmployee_salary());
         params.put("image", employee.getProfile_image());
         return params;
+    }
+
+    //==============Trial======================
+
+    public static void get2(String api, HashMap<String, String> params) {
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, server(api), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("data");
+                            JSONObject employee = jsonArray.getJSONObject(0);
+                            Employee employee1 = new Employee(employee.getInt("id"),
+                                    employee.getString("employee_name"),
+                                    employee.getInt("employee_salary"),
+                                    employee.getInt("employee_age"),
+                                    employee.getString("profile_image"));
+
+                            String status = response.getString("message");
+
+                            Log.d("@@@James", employee1.toString());
+                            Log.d("@@@James", status);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return params;
+            }
+        };
+        MyApplication.instance.addToRequestQueue(request);
     }
 }

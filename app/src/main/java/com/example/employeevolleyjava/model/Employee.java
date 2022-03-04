@@ -7,6 +7,17 @@ public class Employee {
     private int employee_age;
     private String profile_image;
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", employee_name='" + employee_name + '\'' +
+                ", employee_salary=" + employee_salary +
+                ", employee_age=" + employee_age +
+                ", profile_image='" + profile_image + '\'' +
+                '}';
+    }
+
     public Employee(int id, String employee_name, int employee_salary, int employee_age, String profile_image) {
         this.id = id;
         this.employee_name = employee_name;
