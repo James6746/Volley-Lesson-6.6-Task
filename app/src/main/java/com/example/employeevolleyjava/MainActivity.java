@@ -6,8 +6,10 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.employeevolleyjava.model.Employee;
+import com.example.employeevolleyjava.model.Objects;
 import com.example.employeevolleyjava.volley.VolleyHandler;
 import com.example.employeevolleyjava.volley.VolleyHttp;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -19,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        VolleyHttp.get2(VolleyHttp.API_LIST_POST, VolleyHttp.paramsEmpty());
-//        workWithVolley();
+//        VolleyHttp.get2(VolleyHttp.API_LIST_POST, VolleyHttp.paramsEmpty());
+        workWithVolley();
     }
 
     private void workWithVolley() {
@@ -42,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
         VolleyHttp.get(VolleyHttp.API_LIST_POST, VolleyHttp.paramsEmpty(), new VolleyHandler() {
             @Override
             public void onSuccess(String response) {
-                Log.d("@@@James", response);
+               Objects objects = new Gson().fromJson(response, Objects.class);
+
+                Log.d("@@@James", "Objects <<==== " + objects.getEmployees().get(0).toString());
             }
 
             @Override
